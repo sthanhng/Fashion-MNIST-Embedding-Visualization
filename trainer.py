@@ -6,6 +6,8 @@ from keras.layers.core import Dense, Dropout, Flatten
 from keras.layers.convolutional import Conv2D, MaxPooling2D
 from keras.utils import np_utils
 
+from utils import plot_loss_acc
+
 
 def data_generator(batch_size=32):
     """
@@ -66,7 +68,7 @@ def run_training(nb_epoch):
     # Train the model
     # ===================================================================
     print("[i] training the model...")
-    model.fit_generator(data_generator(), steps_per_epoch=60000 // 32,
+    history = model.fit_generator(data_generator(), steps_per_epoch=60000 // 32,
                         nb_epoch=nb_epoch, validation_data=None)
 
     # ===================================================================
@@ -84,6 +86,11 @@ def run_training(nb_epoch):
 
     with open('./models/config.json', 'w') as f:
         f.write(json_string)
+
+    # ===================================================================
+    # Plot the training loss and accuracy
+    # ===================================================================
+    plot_loss_acc(history, nb_epoch, "assets/training_loss_acc.png")
 
     print("********************* Done **********************")
 
