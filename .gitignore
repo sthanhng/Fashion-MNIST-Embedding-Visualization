@@ -43,6 +43,7 @@ Temporary Items
 
 ## PyCharm
 .idea/
+__pycache__/
 
 ## Virtualenv
 venv/
