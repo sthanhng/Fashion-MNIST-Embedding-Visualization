@@ -1,4 +1,6 @@
 import numpy as np
+import pickle
+import scipy.misc
 
 
 def images_to_sprite(data):
@@ -30,3 +32,11 @@ def images_to_sprite(data):
     data = (data * 255).astype(np.uint8)
 
     return data
+
+
+if __name__ == "__main__":
+    with open('./models/train_10k.pkl', 'rb') as f:
+        X_train = pickle.load(f)
+
+    sprite_img = images_to_sprite(X_train)
+    scipy.misc.imsave('./oss_data/Fashion_MNIST_sprites.png', np.squeeze(sprite_img))
