@@ -1,0 +1,21 @@
+{
+    "embeddings": [
+        {
+            "tensorPath": "oss_data/Fashion_MNIST_tensor.bytes",
+            "tensorShape": [
+                10000,
+                128
+            ],
+            "metadataPath": "oss_data/Fashion_MNIST_labels.tsv",
+            "tensorName": "FashionMNIST2Vec",
+            "sprite": {
+                "imagePath": "oss_data/Fashion_MNIST_sprites.png",
+                "singleImageDim": [
+                    28,
+                    28
+                ]
+            }
+        }
+    ],
+    "modelCheckpointPath": "Fashion MNIST Embedding Visualization"
+}
