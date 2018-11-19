@@ -69,7 +69,7 @@ def run_training(nb_epoch, model_filename, plot_path):
     # Train the model
     # ===================================================================
     print("[i] training the model...")
-    history = model.fit_generator(data_generator(), steps_per_epoch=60000 // nb_epoch,
+    history = model.fit_generator(data_generator(), steps_per_epoch=60000 // 32,
                                   nb_epoch=nb_epoch, validation_data=None)
 
     # ===================================================================
