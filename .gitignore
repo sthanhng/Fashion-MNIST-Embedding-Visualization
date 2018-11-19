@@ -46,3 +46,8 @@ Temporary Items
 
 ## Virtualenv
 venv/
+
+## Model files
+ids.pkl
+train_10k.pkl
+embedding_128D.pkl

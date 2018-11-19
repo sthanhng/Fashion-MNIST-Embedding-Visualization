@@ -3,3 +3,5 @@ pickle
 scipy
 tensorflow==1.8
 keras
+sklearn
+pillow
