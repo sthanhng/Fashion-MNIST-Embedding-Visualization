@@ -10,9 +10,7 @@ def plot_loss_acc(model, epochs, save_path):
     plt.figure()
     N = epochs
     plt.plot(np.arange(0, N), model.history['loss'], label='train_loss')
-    plt.plot(np.arange(0, N), model.history['val_loss'], label='val_loss')
     plt.plot(np.arange(0, N), model.history['acc'], label='train_acc')
-    plt.plot(np.arange(0, N), model.history['val_acc'], label='val_acc')
     plt.title('Training loss and accuracy')
     plt.xlabel('Epoch #')
     plt.ylabel('Loss/Accuracy')
