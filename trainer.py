@@ -1,4 +1,5 @@
 import os
+import argparse
 
 from keras.datasets import fashion_mnist
 from keras.models import Sequential
@@ -30,12 +31,12 @@ def data_generator(batch_size=32):
     while True:
         for i in range(int(X_train.shape[0] / batch_size)):  # 1875
             if i % 125 == 0:
-                print("| ==> [{0} / {1}]".format(i+1, int(X_train.shape[0] / batch_size)))
+                print("| ==> [{0} / {1}]".format(i + 1, int(X_train.shape[0] / batch_size)))
             # (32, 1, 28, 28), (32, 10)
             yield X_train[i * 32:(i + 1) * 32], y_train[i * 32:(i + 1) * 32]
 
 
-def run_training(nb_epoch):
+def run_training(nb_epoch, model_filename, plot_path):
     """
     Training the Fashion MNIST model
     :param nb_epoch:
@@ -68,8 +69,8 @@ def run_training(nb_epoch):
     # Train the model
     # ===================================================================
     print("[i] training the model...")
-    history = model.fit_generator(data_generator(), steps_per_epoch=60000 // 32,
-                        nb_epoch=nb_epoch, validation_data=None)
+    history = model.fit_generator(data_generator(), steps_per_epoch=60000 // nb_epoch,
+                                  nb_epoch=nb_epoch, validation_data=None)
 
     # ===================================================================
     # Save the best model
@@ -81,7 +82,7 @@ def run_training(nb_epoch):
         print("[i] the [models/] directory already exists!")
 
     print("[i] saving the model...")
-    model.save_weights('./models/fashion_mnist_model.h5')
+    model.save_weights('./models/' + model_filename)
     json_string = model.to_json()
 
     with open('./models/config.json', 'w') as f:
@@ -90,10 +91,21 @@ def run_training(nb_epoch):
     # ===================================================================
     # Plot the training loss and accuracy
     # ===================================================================
-    plot_loss_acc(history, nb_epoch, "assets/training_loss_acc.png")
+    plot_loss_acc(history, nb_epoch, plot_path)
 
     print("********************* Done **********************")
 
 
 if __name__ == "__main__":
-    run_training(nb_epoch=10)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--num-epochs', type=int, default=10,
+                        help='the number of epochs for training')
+    parser.add_argument('--model-name', type=str, default='',
+                        help='the saved model')
+    parser.add_argument('--plot-path', type=str, default='assets/plot.png',
+                        help='the path to the training loss and accuracy')
+    args = parser.parse_args()
+
+    run_training(nb_epoch=args.num_epochs,
+                 model_filename=args.model_name,
+                 plot_path=args.plot_path)
